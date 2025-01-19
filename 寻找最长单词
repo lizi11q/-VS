@@ -1,0 +1,42 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<ctype.h>
+
+int main() {
+	printf("请输入句子：");
+	char arr[100];
+	gets_s(arr, 100);
+	//flag=1,isalpha
+	int flag = 0;
+	int maxLen = 0;
+	int currentLen = 0;
+	int maxindex = 0;
+	int currentAlphaIndex = 0;
+	int i = 0;
+	while (arr[i] != '\0') {
+		char ch = arr[i];
+		if (isalpha(ch)) {
+			if (flag == 0) {
+				currentAlphaIndex = i;
+			}
+			flag = 1;
+			currentLen++;
+		}
+		else {
+			flag = 0;
+			if (currentLen > maxLen) {
+				maxLen = currentLen;
+				maxindex = currentAlphaIndex;
+			}
+			currentLen = 0;
+		}
+		i++;
+	}
+	if (flag && currentLen > maxLen) {
+		maxLen = currentLen;
+		maxindex = currentAlphaIndex;
+	}
+	printf("%d %d", maxindex, maxLen);
+
+	return 0;
+}
