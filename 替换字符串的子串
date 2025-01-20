@@ -1,0 +1,46 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<string>
+
+#define MAX1 100
+#define MAX2 10
+void replaceSubstring(char* str, char* A, char* B);
+int main() {
+	char str[MAX1];
+	char A[MAX2];
+	char B[MAX2];
+
+	printf("请输入主串：");
+	fgets(str, MAX1, stdin);
+	str[strcspn(str, "\n")] = '\0';
+
+	printf("请输入子串A：");
+	fgets(A, MAX2, stdin);
+	A[strcspn(A, "\n")] = '\0';
+
+	printf("请输入子串B：");
+	fgets(B, MAX2, stdin);
+	B[strcspn(B, "\n")] = '\0';
+
+	replaceSubstring(str, A, B);
+
+	printf("%s", str);
+
+	return 0;
+}
+void replaceSubstring(char* str, char* A, char* B) {
+	int lenA = strlen(A);
+	//缓冲区
+	char buffer[MAX1];
+	buffer[0] = '\0';
+	char* pos;
+	int index = 0;
+
+	while ((pos = strstr(str + index, A)) != NULL) {
+		strncat(buffer, str + index, pos - (str + index));
+		strcat(buffer, B);
+		index = (pos - str) + lenA;
+	}
+	strcat(buffer, str + index);
+	strcpy(str, buffer);
+}
